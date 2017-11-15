@@ -28,6 +28,15 @@ section {
 header {
   padding: 200px 0;
 }
+a {
+    text-decoration: none;
+}
+a:link, a:visited {
+    color: white;
+}
+a:hover {
+    color: white;
+}
 .section-title {
   padding: 0 0 50px 0;
 }
