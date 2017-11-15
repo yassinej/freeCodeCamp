@@ -1,0 +1,33 @@
+html {
+  font-size: 18px;
+}
+
+@include media-breakpoint-up(sm) {
+  html {
+    font-size: 20px;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  html {
+    font-size: 24px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  html {
+    font-size: 32px;
+  }
+}
+body {
+  font-family: 'Varela Round', sans-serif;
+}
+section {
+  padding: 50px 0 100px 0;
+}
+header {
+  padding: 200px 0;
+}
+.section-title {
+  padding: 0 0 50px 0;
+}
