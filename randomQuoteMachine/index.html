@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Random Quotes Generator</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <!-- FontAwesome Icons -->
+    <script src="https://use.fontawesome.com/df25297bec.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/index.css" rel="stylesheet"/>
+    <!-- JQuery min -->
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="jumbotron text-center">
+        <div class="display-2">
+          Random Quote Generator
+        </div>
+        <p class="lead">A quote at the tip of your fingers.</p>
+
+        <div class="input pb-4" id="quote">
+        </div>
+
+        <button class="btn btn-lg btn-info" id="get-quote"/>Get a Better one</button>
+      </div>
+    </div>
+
+  </body>
+  <script>
+  $( document ).ready(function() {
+  console.log( "ready!" );
+  console.log();
+  $('#get-quote').on('click', function(e) {
+    e.preventDefault();
+    $.getJSON("http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=", function(a) {
+  $("#quote").append(a[0].content + "<p>— " + a[0].title + "</p>")
+});
+  });
+});
+
+</script>
+</html>
