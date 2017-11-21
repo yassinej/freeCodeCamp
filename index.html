@@ -20,7 +20,7 @@
   integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
   crossorigin="anonymous"></script>
   </head>
-  <body id="page-top">
+  <body id="page-top" style="font-family: 'Varela Round'">
     <div class="container-fluid px-0">
       <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top text-black" id="mainNav">
@@ -45,18 +45,18 @@
       </div>
     </nav>
       <header class="display4-sm display-2 text-center fluid">
-        JazyLabs.Origin
+        - JazyLabs.Origin -
       </header>
       <section id="about" class="bg-dark text-white">
         <div class="container">
           <div class="section-title lead text-center">
             Hi,  I am Yassine !
             <br />
-            An inspired Web Developer, great team player and QA Specialist.
+            An enthousiast Web Developer, great team player and QA Specialist.
           </div>
           <div class="row">
             <div class="col-sm-4  mx-auto text-center">
-                <img class="img-fluid rounded" src="assets/ID.png" alt="My cute face" />
+                <img class="img-fluid rounded" src="https://github.com/yassinej/freeCodeCamp/blob/master/assets/ID.png?raw=true" alt="My cute face" />
             </div>
             <div class="col-sm-8  mx-auto">
                 <ul class="pt-5">
@@ -77,55 +77,46 @@
           </div>
           <div class="row">
             <div class="col-sm-4 mx-auto text-center">
-
-                <div class="img-thumbnail">
-                  <a href="https://yassinej.github.io/freeCodeCamp/tributePage/">
-                  <img class="img-fluid" src="assets/TRIBUTE_PAGE.png" alt="Card image cap">
+              <div class="img-thumbnail">
+                <a href="https://yassinej.github.io/freeCodeCamp/tributePage/">
+                <img class="img-fluid" src="https://github.com/yassinej/freeCodeCamp/blob/master/assets/TRIBUTE_PAGE.png?raw=true" alt="Card image cap">
                 </a>
-                  <hr />
-                  <div class="lead">- TributePage -</div>
-                  <p>Initial Project realised on FreeCodeCamp.</p>
-                </div>
-              </a>
+                <hr />
+                <div class="lead">- TributePage -</div>
+                <p>Initial Project realised on FreeCodeCamp.</p>
+              </div>
             </div>
             <div class="col-sm-4 mx-auto text-center">
-
-                <div class="img-thumbnail">
-                  <a href="https://yassinej.github.io/freeCodeCamp/">
-                  <img class="img-fluid" src="assets/PORT_FOLIO.png" alt="Card image cap">
+              <div class="img-thumbnail">
+                <a href="https://yassinej.github.io/freeCodeCamp/">
+                <img class="img-fluid" src="https://github.com/yassinej/freeCodeCamp/blob/master/assets/PORT_FOLIO.png?raw=true" alt="Card image cap">
                 </a>
-                  <hr />
-                  <div class="lead">- PortFolio -</div>
-                  <p>Second Project realised on FreeCodeCamp.</p>
-                </div>
-              </a>
+                <hr />
+                <div class="lead">- PortFolio -</div>
+                <p>Second Project realised on FreeCodeCamp.</p>
+              </div>
             </div>
             <div class="col-sm-4 mx-auto text-center">
-
-                <div class="img-thumbnail">
-                  <a href="#">
-                  <img  class="img-fluid"  src="assets/GALLERY_OERK.png" alt="Card image cap">
+              <div class="img-thumbnail">
+                <a href="#">
+                <img  class="img-fluid"  src="https://github.com/yassinej/freeCodeCamp/blob/master/assets/GALLERY_OERK.png?raw=true" alt="Card image cap">
                 </a>
                   <hr />
-                  <div class="lead">- OERK -</div>
-                  <p>First Personal Project: A Node Web App using HTML and CSS</p>
-                </div>
-              </a>
+                <div class="lead">- OERK -</div>
+                <p>First Personal Project: A Node Web App using HTML and CSS</p>
+              </div>
             </div>
-          </div>
-          <div class="row">
+            <div class="row">
             <div class="col-sm-4 mx-auto text-center">
-
                 <div class="img-thumbnail">
-                  <a href="https://yassinej.github.io/freeCodeCamp/randomQuoteMachine">
-                  <img class="img-fluid" src="assets/QRG.png" alt="Card image cap">
-                </a>
+                  <a href="https://yassinej.github.io/freeCodeCamp/randomQuoteMachine/">
+                    <img class="img-fluid"
+ src="https://github.com/yassinej/freeCodeCamp/blob/master/assets/QRG.png?raw=true" alt="Card image cap">
+                  </a>
                   <hr />
                   <div class="lead">- Random Quote Generator -</div>
                   <p>Intermediate Project on FreeCodeCamp.</p>
-
                 </div>
-
             </div>
           </div>
         </div>
@@ -165,33 +156,33 @@
     </footer>
     <script>
     $( document ).ready(function() {
-    console.log( "ready!" );
-    console.log();
+    //console.log( "ready!" );
+    //console.log();
     const padding = $("#about").css("padding-top").replace(/[^-\d\.]/g, '');;
 
     const aboutPosition = $("#about").offset().top - padding;
     const projectsPosition = $("#projects").offset().top - padding;
     let white = false;
-    console.log("Top padding is = ", padding);
+    //console.log("Top padding is = ", padding);
     $( window ).scroll(()=>{
       const scrollPosition = $(window).scrollTop();
-      console.log("scrolling", scrollPosition);
+      //console.log("scrolling", scrollPosition);
       if(scrollPosition>= 0 && scrollPosition<= aboutPosition){
-        console.log("scrolling header");
+        //console.log("scrolling header");
         if(white){
         $("nav").removeClass("navbar-light bg-white").addClass("navbar-dark bg-dark");
         white=false;
         }
       }
       if(scrollPosition>= aboutPosition && scrollPosition<= projectsPosition){
-        console.log("scrolled about");
+        //console.log("scrolled about");
         if(!white){
         $("nav").removeClass("navbar-dark bg-dark").addClass("navbar-light bg-white");
         white=true;
         }
       }
       if(scrollPosition>= projectsPosition){
-        console.log("scrolling projects");
+        //console.log("scrolling projects");
         if(white){
         $("nav").removeClass("navbar-light bg-white").addClass("navbar-dark bg-dark");
         white=false;
