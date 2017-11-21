@@ -1,4 +1,31 @@
+.body{
+  font-family: 'Aldrich', sans-serif;
+  background-color: #FFFF33;
+}
+
+.header {
+  color: red;
+}
+.footer {
+
+}
+.content {
+  margin: 130px 70px 130px 70px;
+}
+.quote-container {
+  color: black;
+}
+.lead {
+  color: blue;
+}
 .twitter-button {
-    background: #55ACEE;
+    background: grey;
     color: white;
+}
+.twitter-button {
+    background: #1DA1F2;
+    color: white;
+}
+#quote {
+ font-family: 'Courgette', cursive;
 }

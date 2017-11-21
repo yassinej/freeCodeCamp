@@ -11,31 +11,43 @@
     <!-- FontAwesome Icons -->
     <script src="https://use.fontawesome.com/df25297bec.js"></script>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="css/index.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Aldrich" rel="stylesheet">
     <!-- JQuery min -->
     <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
   </head>
-  <body>
-    <div class="container text-center">
-      <div class="">
+  <body class="body">
+    <div class="content text-center" >
+      <div class="header py-3">
         <div class="display-4">
           Random Quote Generator
         </div>
+      </div>
+      <div>
         <p class="lead">A quote at the tip of your fingers.</p>
+      </div>
 
-        <div class="input" id="quote">
+        <div class="quote-container p-3">
+          <div id="quote"></div>
         </div>
+
+        <div>
+        <button class="btn button" id="get-quote"/>New Quote</button>
         <a href="#" class="btn twitter-button" id="tweet-button"><i class="fa fa-twitter"></i> Tweet</a>
         <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
       </div>
-      <button class="btn btn-lg btn-info" id="get-quote"/>New Random Quote</button>
-    </div>
 
+    </div>
+    <footer class="footer py-3">
+        <div class="text-center">
+            Coded with Love by JazyLabs &copy; 2017
+            <br>
+            All Rights Reversed
+        </div>
+    </footer>
   </body>
 
   <script>
