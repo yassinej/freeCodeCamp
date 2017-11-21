@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>localWeather</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+  <!-- FontAwesome Icons -->
+  <script src="https://use.fontawesome.com/df25297bec.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/index.css" rel="stylesheet"/>
+  <!-- JQuery min -->
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+</head>
+  <body class="body">
+    <div class="container-fluid text-center" id="weather">
+      <div id="weather-city"></div>
+      <div id="main-temp"></div>
+      <div id="weather-icon"></div>
+      <div id="weather-descr"></div>
+    </div>
+  </body>
+  <footer class="footer py-3">
+      <div class="text-center">
+          Coded with Love by JazyLabs &copy; 2017
+          <br>
+          All Rights Reversed
+      </div>
+  </footer>
+  <script>
+  $( document ).ready(function() {
+  console.log( "ready!" );
+
+  function getPosition(){
+    if ("geolocation" in navigator) {
+    /* geolocation is available */
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.console.log("position is: ",position);
+        return position;
+      });
+    } else {
+      /* geolocation IS NOT available */
+      $("#weather").append("<p>Position not available</p>");
+    }
+  };
+  function getCity(lat, long, key){
+    url="https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+long+"&key="+key;
+    $.getJSON(url, function(response){
+      console.log(response);
+    })
+  }
+  function getWeather(lat, long){
+    var url = "https://fcc-weather-api.glitch.me/api/current?lat="+lat+"&lon="+long;
+    $.getJSON(url, function(a) {
+      console.log(a.weather);
+      $("#weather").append("<img src="+a.weather[0].icon+" alt='Weather icon' />"+a.weather[0].description + "<p>— " + a.main.temp + "</p>");
+    });
+  }
+  //On page Load
+  var gKey = "AIzaSyDVliRZmOuXf-35Pw-yc_CB-qd8z_AvjKk";
+  var position = getPosition();
+  var postLat = position.coords.latitude;
+  var postLat = position.coords.longitude;
+  var city = getCity(posLat, posLong, gKey);
+  getWeather(posLat, posLong);
+});
+
+</script>
+</html>
