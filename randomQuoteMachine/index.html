@@ -21,30 +21,41 @@
   crossorigin="anonymous"></script>
   </head>
   <body>
-    <div class="container">
-      <div class="jumbotron text-center">
-        <div class="display-2">
+    <div class="container text-center">
+      <div class="">
+        <div class="display-4">
           Random Quote Generator
         </div>
         <p class="lead">A quote at the tip of your fingers.</p>
 
-        <div class="input pb-4" id="quote">
+        <div class="input" id="quote">
         </div>
-
-        <button class="btn btn-lg btn-info" id="get-quote"/>Get a Better one</button>
+        <a href="#" class="btn twitter-button" id="tweet-button"><i class="fa fa-twitter"></i> Tweet</a>
+        <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
       </div>
+      <button class="btn btn-lg btn-info" id="get-quote"/>New Random Quote</button>
     </div>
 
   </body>
+
   <script>
   $( document ).ready(function() {
   console.log( "ready!" );
   console.log();
+  function getQuote(){
+    $("#quote").empty();
+    var url = "https://talaikis.com/api/quotes/random/"
+    $.getJSON(url, function(a) {
+      $("#quote").append(a.quote + "<p>— " + a.author + "</p>");
+      $("#tweet-button").attr("href",'https://twitter.com/intent/tweet?text='+a.quote+' -- '+a.author+'&hashtags=randomQuoteGenerator,freeCodeCamp');
+    });
+  }
+  //On page Load
+  getQuote();
+  //on button click
   $('#get-quote').on('click', function(e) {
     e.preventDefault();
-    $.getJSON("https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=", function(a) {
-  $("#quote").append(a[0].content + "<p>— " + a[0].title + "</p>")
-});
+    getQuote();
   });
 });
 
