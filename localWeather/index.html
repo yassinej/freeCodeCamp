@@ -21,29 +21,25 @@
   crossorigin="anonymous"></script>
 </head>
   <body class="body">
-    <div class="text-center py-6" id="weather">
-      <div class="lead" id="promise-message">
-        Loading Location...
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
+      <div class="container">
+        <a class="navbar-brand" href="#">SimpleWeather</a>
+        <div class="btn-group btn-group-sm float-right" role="group" data-toggle="buttons" id="unit-selector">
+          <button type="button" class="btn btn-info" id="C">°C</button>
+          <button type="button" class="btn btn-secondary" id="F">°F</button>
+        </div>
       </div>
-      <div id="weather-city"></div>
-      <div id="main-temp"></div>
-      <img id="weather-icon"></img>
-      <div id="weather-descr"></div>
-      <div id="main-pressure"></div>
-      <div id="main-temp-min"></div>
-      <div id="main-temp-max"></div>
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-secondary active">
-          <input type="checkbox" checked autocomplete="off">°C
-        </label>
-        <label class="btn btn-secondary">
-          <input type="checkbox" autocomplete="off">°F
-        </label>
-
+    </nav>
+    <div class="text-center mx-auto" id="weather">
+      <div class="container" id="container">
+        <div class="lead py-3" id="promise-message">
+          Fetching Location...
+        </div>
+        <div class="lead py-3" id="message"></div>
       </div>
     </div>
   </body>
-  <footer class="footer py-3">
+  <footer class="footer bg-light py-3">
       <div class="text-center">
           Coded with Love by JazyLabs &copy; 2017
           <br>
@@ -56,36 +52,36 @@
   var gKey = "AIzaSyDVliRZmOuXf-35Pw-yc_CB-qd8z_AvjKk";
   var city = "";
   var weather = "";
+  var unit ="°C";
+  var first = true;
 
   function getAll(){
     if ("geolocation" in navigator) {
     /* geolocation is available */
     navigator.geolocation.getCurrentPosition(function(position) {
       //console.log("position is: ",position);
-      city = getAsyncCity(position.coords.latitude, position.coords.longitude, gKey);
-      city.then(function(res){
+      var cityPromise = getAsyncCity(position.coords.latitude, position.coords.longitude, gKey);
+      cityPromise.then(function(res){
         //console.log("City promise res", res);
-        $("#weather-city").text(res.results[1].formatted_address);
-        $("#promise-message").text("Loading Weather...");
-        weather = getAsyncWeather(position.coords.latitude, position.coords.longitude);
-        weather.then(function(res){
+        $("#promise-message").text(res.results[1].formatted_address);
+        $("#message").text("Loading Weather...");
+        var weatherPromise = getAsyncWeather(position.coords.latitude, position.coords.longitude);
+        weatherPromise.then(function(res){
           //console.log("promise res: ",res);
-          $("#promise-message").text("");
-          $("#main-temp").text(res.main.temp+" °C");
-          $("#weather-descr").text(res.weather[0].description);
-          $("#weather-icon").attr("src", res.weather[0].icon);
-          $("#main-temp-min").text(res.main.temp_min+" °C");
-          $("#main-temp-max").text(res.main.temp_max+" °C");
-          $("#main-pressure").text(res.main.pressure+" mPa");
-          changeBackground(res.weather[0].main)
-        })
+
+          $("#message").remove();
+          changeBackground(res.weather[0].main);
+          weather = res;
+          displayWeather(weather);
+        });
+
       });
     });
-  } else {
+  }else{
     /* geolocation IS NOT available */
-    $("#weather").append("<p>Position not available</p>");
-    }
-  };
+    $("#promise-message").append("<p>Position not available...</p>");
+  }
+};
   function getAsyncWeather(lat, long) {
     var url = "https://fcc-weather-api.glitch.me/api/current?lat="+lat+"&lon="+long;
     return new Promise((resolve, reject) => {
@@ -126,8 +122,63 @@
         break;
     }
   }
+  function convertTo(temp, unit){
+    switch (unit) {
+      case "°C":
+        return (temp-32)*5/9;
+      case "°F":
+        return (temp*9)/5 + 32;
+    }
+
+  }
+  function displayWeather(weather){
+    if(first){
+      //create structure:
+      var structure = '<div class="py-3"><img id="weather-icon"></img><div id="main-temp"></div><div id="weather-descr"></div></div><div class="py-3"><table style="width:100%"><tr><td>Min Temp</td><td>Max Temp</td><td>Pressure</td></tr><tr><td id="main-temp-min"></td><td id="main-temp-max"></td><td id="main-pressure"></td></tr></table></div>'
+      $("#container").append(structure);
+      first=false;
+    }
+
+    //display info
+     $("#main-temp").text(weather.main.temp+" "+unit);
+     $("#weather-descr").text(weather.weather[0].description);
+     $("#weather-icon").attr("src", weather.weather[0].icon);
+     $("#main-temp-min").text(weather.main.temp_min+" "+unit);
+     $("#main-temp-max").text(weather.main.temp_max+" "+unit);
+     $("#main-pressure").text(weather.main.pressure+" mPa");
+  }
+
+  $("#unit-selector").click(function(e){
+    console.log();
+    switch (e.target.id) {
+      case "C":
+        if(!$("#C").hasClass("btn-info")){
+          unit = "°C";
+          weather.main.temp=convertTo(weather.main.temp, unit);
+          weather.main.temp_min=convertTo(weather.main.temp_min, unit);
+          weather.main.temp_max=convertTo(weather.main.temp_max, unit);
+          $("#C").addClass("btn-info").removeClass("btn-secondary");
+          $("#F").addClass("btn-secondary").removeClass("btn-info");
+          displayWeather(weather);
+        }
+        break;
+      case "F":
+      if(!$("#F").hasClass("btn-info")){
+        unit = "°F";
+        weather.main.temp=convertTo(weather.main.temp, unit);
+        weather.main.temp_min=convertTo(weather.main.temp_min, unit);
+        weather.main.temp_max=convertTo(weather.main.temp_max, unit);
+        $("#F").addClass("btn-info").removeClass("btn-secondary");
+        $("#C").addClass("btn-secondary").removeClass("btn-info");
+        displayWeather(weather)
+      }
+        break;
+    }
+  });
   //On page Load
   getAll();
+
+
 });
 
 </script>

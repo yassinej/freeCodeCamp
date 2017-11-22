@@ -1,22 +1,35 @@
 html {
-    position: relative;
-    min-height: 100%;
-    background: no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+  position: relative;
+  min-height: 100%;
+  background: no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 .body{
-  
-}
 
+}
 .header {
 
 }
 .footer {
-    width: 100%;
-    height: 70px;
-    position: absolute;
-    bottom: 0px; left: 0;
+  width: 100%;
+  height: 70px;
+  position: absolute;
+  bottom: 0px; left: 0;
+  opacity: 0.6;
+}
+#navbar {
+  opacity: 0.6;
+}
+#weather {
+  margin: 100px 30px 100px 30px ;
+  background-color: #ffffff;
+  opacity: 0.6;
+  filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+#weather-icon{
+  width: 120px;
+  height: 120px;
 }
