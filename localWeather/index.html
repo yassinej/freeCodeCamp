@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html >
 <head>
   <title>localWeather</title>
   <!-- Required meta tags -->
@@ -21,11 +21,26 @@
   crossorigin="anonymous"></script>
 </head>
   <body class="body">
-    <div class="container-fluid text-center" id="weather">
+    <div class="text-center py-6" id="weather">
+      <div class="lead" id="promise-message">
+        Loading Location...
+      </div>
       <div id="weather-city"></div>
       <div id="main-temp"></div>
-      <div id="weather-icon"></div>
+      <img id="weather-icon"></img>
       <div id="weather-descr"></div>
+      <div id="main-pressure"></div>
+      <div id="main-temp-min"></div>
+      <div id="main-temp-max"></div>
+      <div class="btn-group" data-toggle="buttons">
+        <label class="btn btn-secondary active">
+          <input type="checkbox" checked autocomplete="off">°C
+        </label>
+        <label class="btn btn-secondary">
+          <input type="checkbox" autocomplete="off">°F
+        </label>
+
+      </div>
     </div>
   </body>
   <footer class="footer py-3">
@@ -38,39 +53,81 @@
   <script>
   $( document ).ready(function() {
   console.log( "ready!" );
+  var gKey = "AIzaSyDVliRZmOuXf-35Pw-yc_CB-qd8z_AvjKk";
+  var city = "";
+  var weather = "";
 
-  function getPosition(){
+  function getAll(){
     if ("geolocation" in navigator) {
     /* geolocation is available */
     navigator.geolocation.getCurrentPosition(function(position) {
-      console.console.log("position is: ",position);
-        return position;
+      //console.log("position is: ",position);
+      city = getAsyncCity(position.coords.latitude, position.coords.longitude, gKey);
+      city.then(function(res){
+        //console.log("City promise res", res);
+        $("#weather-city").text(res.results[1].formatted_address);
+        $("#promise-message").text("Loading Weather...");
+        weather = getAsyncWeather(position.coords.latitude, position.coords.longitude);
+        weather.then(function(res){
+          //console.log("promise res: ",res);
+          $("#promise-message").text("");
+          $("#main-temp").text(res.main.temp+" °C");
+          $("#weather-descr").text(res.weather[0].description);
+          $("#weather-icon").attr("src", res.weather[0].icon);
+          $("#main-temp-min").text(res.main.temp_min+" °C");
+          $("#main-temp-max").text(res.main.temp_max+" °C");
+          $("#main-pressure").text(res.main.pressure+" mPa");
+          changeBackground(res.weather[0].main)
+        })
       });
-    } else {
-      /* geolocation IS NOT available */
-      $("#weather").append("<p>Position not available</p>");
+    });
+  } else {
+    /* geolocation IS NOT available */
+    $("#weather").append("<p>Position not available</p>");
     }
   };
-  function getCity(lat, long, key){
-    url="https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+long+"&key="+key;
-    $.getJSON(url, function(response){
-      console.log(response);
-    })
-  }
-  function getWeather(lat, long){
+  function getAsyncWeather(lat, long) {
     var url = "https://fcc-weather-api.glitch.me/api/current?lat="+lat+"&lon="+long;
-    $.getJSON(url, function(a) {
-      console.log(a.weather);
-      $("#weather").append("<img src="+a.weather[0].icon+" alt='Weather icon' />"+a.weather[0].description + "<p>— " + a.main.temp + "</p>");
+    return new Promise((resolve, reject) => {
+      $.getJSON(url, function(response) {
+        //console.log("weather response: ",response);
+        resolve(response);
+      });
+    });
+  };
+  function getAsyncCity(lat, long, key) {
+    var url="https://maps.googleapis.com/maps/api/geocode/json?latlng="+lat+","+long+"&key="+key;
+    return new Promise((resolve, reject) => {
+      $.getJSON(url, function(response){
+        //console.log("maps response: ",response);
+        resolve(response);
+      });
     });
   }
+  function changeBackground(weather){
+    switch (weather) {
+      case "Clear":
+      $("html").css("background-image", "url('assets/CLEAR.jpg')");
+        break;
+      case "Rain":
+      $("html").css("background-image", "url('assets/RAIN.jpg')");
+        break;
+      case "Snow":
+      $("body").css("background-image", "url('assets/SNOW.jpg')");
+        break;
+      case "Clouds":
+      $("body").css("background-image", "url('assets/CLOUDS.jpg')");
+        break;
+      case "Mist":
+      $("body").css("background-image", "url('assets/MIST.jpg')");
+      break;
+      default:
+      console.log("nothing to do because", weather);
+        break;
+    }
+  }
   //On page Load
-  var gKey = "AIzaSyDVliRZmOuXf-35Pw-yc_CB-qd8z_AvjKk";
-  var position = getPosition();
-  var postLat = position.coords.latitude;
-  var postLat = position.coords.longitude;
-  var city = getCity(posLat, posLong, gKey);
-  getWeather(posLat, posLong);
+  getAll();
 });
 
 </script>
