@@ -20,7 +20,7 @@
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
 </head>
-  <body class="body">
+  <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
       <div class="container">
         <a class="navbar-brand" href="#">SimpleWeather</a>
@@ -30,8 +30,8 @@
         </div>
       </div>
     </nav>
-    <div class="text-center mx-auto" id="weather">
-      <div class="container" id="container">
+    <div class="container text-center" id="weather">
+      <div class="" id="container">
         <div class="lead py-3" id="promise-message">
           Fetching Location...
         </div>
@@ -125,9 +125,9 @@
   function convertTo(temp, unit){
     switch (unit) {
       case "°C":
-        return (temp-32)*5/9;
+        return Math.round((temp-32)*5/9);
       case "°F":
-        return (temp*9)/5 + 32;
+        return Math.round((temp*9)/5 + 32);
     }
 
   }
@@ -140,6 +140,7 @@
     }
 
     //display info
+    weather.main.temp=Math.round(weather.main.temp);
      $("#main-temp").text(weather.main.temp+" "+unit);
      $("#weather-descr").text(weather.weather[0].description);
      $("#weather-icon").attr("src", weather.weather[0].icon);
