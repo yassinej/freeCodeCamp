@@ -15,7 +15,7 @@ You will find here my freeCodeCamp training projects:
     - Google Font : Spectral SC
     - FontAwesome Icons
 
-2. randomQuoteGenerator:
+3. randomQuoteGenerator:
   - Desc: A random quote generator.
   - Lib/Api:
     - Bootstrap v4-beta2
@@ -24,3 +24,20 @@ You will find here my freeCodeCamp training projects:
       - Courgette
     - FontAwesome Icons
     - Quote Api from Tadas Talaikis
+
+4. localWeather:
+  - Desc: A simple weather App.
+  - Lib/Api:
+    - Bootstrap v4-beta2
+    - Google Fonts :
+      - Varela Round
+    - FCC Weather Api
+    - Google Maps Api
+
+5. wikipediaViewer:
+  - Desc:
+  - Lib/Api:
+    -Bootstrap v4-beta2
+    - Google Fonts :
+      - Varela Round
+    - WikiMedia Api 
