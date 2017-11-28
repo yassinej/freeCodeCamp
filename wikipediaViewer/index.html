@@ -1,134 +1,133 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>wikipediaViewer</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-    <!-- FontAwesome Icons -->
-    <script src="https://use.fontawesome.com/df25297bec.js"></script>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="css/index.css" rel="stylesheet"/>
-    <!-- JQuery min -->
-    <script
-    src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-    crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <div class="display-3 text-center py-5" id="wikipedia">
-      <span class="text-info">WiKi</span><span class="text-warning">PeDiA</span>
-    </div>
-    <div class="container form">
-      <div class="row" id="query-container">
-        <div class="col-lg-6 offset-lg-3">
-          <form class="">
-            <div class="input-group">
-            <input type="text" class="form-control" placeholder="Enter query here"  id="query">
-            <span class="input-group-btn">
-              <button class="btn btn-info" type="submit" id="get-query">Get Query</button>
-            </span>
-            </div>
-          </form>
-        </div>
+    <html>
+    <head>
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <title>wikipediaViewer</title>
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+      <!-- FontAwesome Icons -->
+      <script src="https://use.fontawesome.com/df25297bec.js"></script>
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+      <!-- Custom css -->
+      <link href="css/index.css" rel="stylesheet"/>
+      <!-- JQuery min -->
+      <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    </head>
+    <body class="body">
+      <a href=".">
+      <div class="display-3 text-center py-5" id="wikipedia">
+        <span class="text-info">WiKi</span><span class="text-warning">PeDiA</span>
       </div>
-      <div class="row" id="lucky">
-        <div class="col-lg-6 offset-lg-3">
-          <div class="py-3">
-            -- OR --
+      </a>
+      <div class="container form">
+        <div class="row" id="query-container">
+          <div class="col-lg-6 mx-auto">
+            <form class="">
+              <div class="input-group">
+              <input type="text" class="form-control" placeholder="Enter query here"  id="query">
+              <span class="input-group-btn">
+                <button class="btn btn-info" type="submit" id="get-query">Get Query</button>
+              </span>
+              </div>
+            </form>
           </div>
-          <a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank" class="btn btn-block btn-warning" role="link" id="get-lucky">Get Lucky</a>
+        </div>
+        <div class="row" id="lucky">
+          <div class="col-lg-6 mx-auto">
+            <div class="py-3">
+              -- OR --
+            </div>
+            <a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank" class="btn btn-block btn-warning" role="link" id="get-lucky">Get Lucky</a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-9 mx-auto">
+            <ul class="list-group py-auto px-auto" id="query-list" >
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-9 offset-lg-2">
-          <ul class="list-group py-auto px-auto" id="query-list" >
-          </ul>
+    </body>
+    <footer class="footer">
+      <div class="">
+        <div class="container">
+          Coded with Love by JazyLabs &copy; 2017
+          <br>
+          All Rights Reversed
         </div>
       </div>
-    </div>
+    </footer>
+    <script>
+      $( document ).ready(function() {
+        console.log("*** Page Loaded ***");
+        function prepString(str){
+          var prepedStr = str.replace(/\s+/g, '_')
+          return prepedStr;
+        }
+        function getAsyncQuery(query) {
+          //for test purpose only
+          var proxyurl = "https://cors-anywhere.herokuapp.com/";
+          var url = "https://en.wikipedia.org/w/api.php?action=query&srsearch="+query+"&list=search&format=json"
+          return new Promise((resolve, reject) => {
+            $.getJSON(proxyurl+url, function(response) {
+              //console.log("weather response: ",response);
+              resolve(response);
+              //reject("No answer from Wikipedia Server");
+            });
+          });
+        };
+        function displayQuery(arr){
+          for(var i=0; i<arr.length; i++){
+            var entryUrl = "http://en.wikipedia.org/?curid="+arr[i].pageid;
+            $("#query-list").append('<a href='+entryUrl+' target="_blank" id='+i+'><li class="list-group-item list-group-item-warning mb-3"><div class="d-flex w-100 justify-content-between"><strong>'+arr[i].title+'</strong></div><p class="mb-1">'+arr[i].snippet+'</p></li></a>');
+        }};
 
-
-
-  </body>
-  <footer class="footer">
-    <div class="">
-      <div class="container">
-        Coded with Love by JazyLabs &copy; 2017
-        <br>
-        All Rights Reversed
-      </div>
-    </div>
-  </footer>
-  <script>
-    $( document ).ready(function() {
-      console.log("*** Page Loaded ***");
-      function prepString(str){
-        var prepedStr = str.replace(/\s+/g, '_')
-        return prepedStr;
-      }
-      function getAsyncQuery(query) {
-        //for test purpose only
-        var proxyurl = "https://cors-anywhere.herokuapp.com/";
-        var url = "https://en.wikipedia.org/w/api.php?action=query&srsearch="+query+"&list=search&format=json"
-        return new Promise((resolve, reject) => {
-          $.getJSON(proxyurl+url, function(response) {
-            //console.log("weather response: ",response);
-            resolve(response);
-            //reject("No answer from Wikipedia Server");
+        $("#get-query").click(function(e){
+          e.preventDefault();
+          var query = prepString($("#query").val());
+          if(!query){
+            return;
+          }
+          //console.log("Preped Query:", query);
+          var queryPromise = getAsyncQuery(query);
+          queryPromise.then(function(res){
+            //console.log("query promise res: ",res);
+            $("#query-list").empty();
+            $("#wikipedia").removeClass("display-3 py-5").addClass("display-4");
+            $("#lucky").remove();
+            $("#form").css("padding-top", "20px");
+            $("#query-container").addClass("pt-2 pb-5");
+            displayQuery(res.query.search);
           });
         });
-      };
-      function displayQuery(arr){
-        for(var i=0; i<arr.length; i++){
-          var entryUrl = "http://en.wikipedia.org/?curid="+arr[i].pageid;
-          $("#query-list").append('<a class="fade" href='+entryUrl+' target="_blank" id='+i+'><li class="list-group-item list-group-item-warning mb-3"><div class="d-flex w-100 justify-content-between"><strong>'+arr[i].title+'</strong></div><p class="mb-1">'+arr[i].snippet+'</p></li></a>');
-      }};
+        var fixed=false;
+        $( window ).scroll(()=>{
+          const scrollPosition = $(window).scrollTop();
+          //console.log("scrolling", scrollPosition);
 
-      $("#get-query").click(function(e){
-        e.preventDefault();
-        var query = prepString($("#query").val());
-        if(!query){
-          return;
-        }
-        //console.log("Preped Query:", query);
-        var queryPromise = getAsyncQuery(query);
-        queryPromise.then(function(res){
-          //console.log("query promise res: ",res);
-          $("#query-list").empty();
-          $("#wikipedia").removeClass("display-3 py-5").addClass("display-4");
-          $("#lucky").remove();
-          $("#form").css("padding-top", "20px");
-          $("#query-container").addClass("pt-2 pb-5");
-          displayQuery(res.query.search);
+          if(scrollPosition> 0 && scrollPosition< 80 ){
+            if(fixed){
+                //console.log("remove Fixed");
+                $("#query-container").removeClass("fixed");
+                fixed=false;
+              }
+          }
+          if(scrollPosition>= 80 ){
+            if(!fixed){
+                //console.log("Add Fixed");
+                $("#query-container").addClass("fixed");
+                fixed=true;
+              }
+          }
         });
-      });
-      var fixed=false;
-      $( window ).scroll(()=>{
-        const scrollPosition = $(window).scrollTop();
-        //console.log("scrolling", scrollPosition);
 
-        if(scrollPosition> 0 && scrollPosition< 80 ){
-          if(fixed){
-              //console.log("remove Fixed");
-              $("#query-container").removeClass("fixed");
-              fixed=false;
-            }
-        }
-        if(scrollPosition>= 80 ){
-          if(!fixed){
-              //console.log("Add Fixed");
-              $("#query-container").addClass("fixed");
-              fixed=true;
-            }
-        }
       });
 
-    });
-
-  </script>
-</html>
+    </script>
+  </html>
