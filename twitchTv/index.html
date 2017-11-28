@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Twitch Status</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <!-- FontAwesome Icons -->
+    <script src="https://use.fontawesome.com/df25297bec.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bungee+Shade" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Bungee" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/index.css" rel="stylesheet"/>
+    <!-- JQuery min -->
+    <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  </head>
+  <body class='body'>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto pb-3">
+          <div class="display-3 text-center title">
+          FCC Twitch
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="list-group py-auto px-auto">
+          <a href="https://www.twitch.tv/freecodecamp" target="_blank">
+            <li class='list-group-item mb-3 py-auto'>
+              <div class='d-flex w-100 justify-content-between' id="fcc">
+                <strong>FreeCodeCamp</strong><span id="status"></span>
+              </div>
+              <p id='desc'>Loading Status...</p>
+            </li>
+          </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="lead">
+            Other Users:
+          </div>
+        <button class="btn btn-block btn-success my-2" type="button" data-toggle="collapse" data-target="#collapseOn" aria-expanded="true" aria-controls="collapseOn">
+            Online Streams <i class="fa fa-caret-down" aria-hidden="true"></i>
+        </button>
+        <div class="collapse show" id="collapseOn">
+          <div class="list-group py-auto px-auto" id="online-list"></div>
+        </div>
+        <button class="btn btn-block btn-danger my-2" type="button" data-toggle="collapse" data-target="#collapseOff" aria-expanded="false" aria-controls="collapseOff">
+            Offline Streams <i class="fa fa-caret-down" aria-hidden="true"></i>
+        </button>
+        <div class="collapse mb-2" id="collapseOff">
+          <div class="list-group py-auto px-auto" id="offline-list"></div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer class="footer my-2">
+      <div class="container">
+        Coded with Love by JazyLabs &copy; 2017
+        <br>
+        All Rights Reversed
+      </div>
+  </footer>
+  <script>
+  $( document ).ready(function() {
+  console.log( "***** Page Loaded *****" );
+
+  var idPromises= [];
+  var streamPromises =[];
+  var userArray = ["ESL_SC2", "OgamingSC2", "cretetion", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+
+  function getOnlineStream(user) {
+    //for test purpose only
+    //var proxyurl = "https://cors-anywhere.herokuapp.com/";
+    var url = 'https://wind-bow.glitch.me/twitch-api/streams/'+user+'?callback=?'
+      return new Promise((resolve, reject) => {
+        $.getJSON(url, function(data) {
+          resolve(data);
+        });
+      });
+  };
+  function getId(username){
+    //var proxyurl = "https://cors-anywhere.herokuapp.com/";
+    var url = 'https://wind-bow.glitch.me/twitch-api/users/'+username+'?callback=?'
+      return new Promise((resolve, reject) => {
+        $.getJSON(url, function(data) {
+          resolve(data);
+        });
+      });
+  };
+
+  //Deal with FreeCodeCamp
+
+  var fccPromise = getOnlineStream("freecodecamp");
+  fccPromise.then(function(res){
+      if(res.stream){
+        console.log(res.stream.channel.display_name+" streams is live");
+        console.log("Link is here: ", res._links.channel);
+        $("#status").addClass("circle text-success");
+        $("#desc").text(res.stream.channel.status);
+      }else{
+        $("#status").addClass("circle text-danger");
+        $("#desc").text("Channel is offline. Click to access it.");
+
+      }
+  });
+  //Deal with other users
+  //create stream promises array
+  for(var i=0; i<userArray.length;i++){
+    var user=userArray[i];
+    console.log("user: ", user);
+    streamPromises[i] = getOnlineStream(user);
+  }
+
+  //create user list with stream data.
+  Promise.all(streamPromises).then(function(res){
+    console.log(res);
+    res.forEach(function(stream){
+        var url= "https://www.twitch.tv/"+stream._links.self.substr(stream._links.self.lastIndexOf('/') + 1);
+      if(stream.stream){
+        //console.log(stream.stream.channel.display_name+" streams is live");
+        $("#online-list").append("<a href="+url+" target='_blank'><li class='list-group-item my-2'><div class='d-flex w-100 justify-content-between'>"+stream.stream.channel.display_name+"<span class='circle text-success'></span></div><p class='mb-1'>"+stream.stream.channel.status+"</p></li></a>")
+      }else{
+        console.log("Streams are down");
+          $("#offline-list").append('<a href='+url+' target="_blank"><li class="list-group-item my-2"><div class="d-flex w-100 justify-content-between">'+stream._links.self.substr(stream._links.self.lastIndexOf('/') + 1)+'<span class="circle text-danger" /></div><p>Channel is offline. Click to access channel.</p></li></a>')
+      }
+    })
+  })
+});
+  </script>
+  </html>
