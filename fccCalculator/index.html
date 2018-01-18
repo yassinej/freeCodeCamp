@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>FccCalculator</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/index.css" rel="stylesheet"/>
+  <!-- JQuery min -->
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+</head>
+  <body>
+    <header>
+      FCC BASIC CALCULATOR
+    </header>
+    <div class="wrapper">
+      <div class="">
+      </div>
+      <div class="calculator">
+        <div class="calculator-lcd">
+
+            <label id='res' class="calculator-lcd-res hidden">0</label>
+
+            <label id='curOpe' className="calculator-lcd-cur-ope" ></label>
+
+            <label id='tempRes' class="calculator-lcd-temp-res">0</label>
+
+        </div>
+        <div class="calculator-buttons">
+          <button id='btnAC' value='AC' class="calculator-button calculator-button__red">C</button>
+          <div ></div>
+          <div ></div>
+          <button id="btn/" value='/' class=" calculator-button calculator-button__black">/</button>
+          <button id="btn7" value='7' class="calculator-button calculator-button__gray">7</button>
+          <button id="btn8" value='8' class="calculator-button calculator-button__gray">8</button>
+          <button id="btn9" value='9' class="calculator-button calculator-button__gray">9</button>
+          <button id="btn*" value='*' class="calculator-button calculator-button__black">*</button>
+          <button id="btn4" value='4' class="calculator-button calculator-button__gray">4</button>
+          <button id="btn5" value='5' class="calculator-button calculator-button__gray">5</button>
+          <button id="btn6" value='6' class="calculator-button calculator-button__gray">6</button>
+          <button id="btn-" value='-' class="calculator-button calculator-button__black">-</button>
+          <button id="btn1" value='1' class="calculator-button calculator-button__gray">1</button>
+          <button id="btn2" value='2' class="calculator-button calculator-button__gray">2</button>
+          <button id="btn3" value='3' class="calculator-button calculator-button__gray">3</button>
+          <button id="btn+" value='+' class="calculator-button calculator-button__black">+</button>
+          <div ></div>
+          <button id="btn0" value='0' class="calculator-button calculator-button__gray">0</button>
+          <button id="btnDEC" value='.' class="calculator-button calculator-button__gray">.</button>
+          <button id="btn=" value='=' class="calculator-button calculator-button__black">=</button>
+        </div>
+      </div>
+      <div class="">
+      </div>
+    </div>
+  </body>
+  <footer class="footer">
+      <div class="">
+          Coded with Love by JazyLabs &copy; 2017
+          <br>
+          All Rights Reversed
+      </div>
+  </footer>
+  <script>
+$(document).ready(function() {
+  var tempRes = "0";
+  var curOpe = "";
+  var prevOpe = "";
+  var res = "0";
+  var typed = "";
+  var decimal = false;
+
+  function formatRes(res) {
+    if (typeof res === "number" && res.toString().length >= 8) {
+      console.log("long number");
+      return Number.parseFloat(res).toExponential(5);
+    } else {
+      return res;
+    }
+  }
+  function clear(){
+    decimal = false;
+    prevOpe = "";
+    curOpe = "";
+    tempRes = "0";
+    res = "0";
+    $("#res").addClass("hidden");
+    $("#curOpe").html(curOpe);
+    $("#res").html(res);
+    $("#tempRes").html(tempRes);
+  }
+  function runOpe(str) {
+    switch (prevOpe) {
+      case "+":
+        res = parseFloat(res) + parseFloat(tempRes);
+        break;
+      case "-":
+        res = parseFloat(res) - parseFloat(tempRes);
+        break;
+      case "*":
+        if (tempRes !== "0") {
+          res = parseFloat(res) * parseFloat(tempRes);
+        } else {
+          res = 0;
+        }
+        break;
+      case "/":
+        if (tempRes === "0") {
+          res = 0;
+        } else {
+          res = parseFloat(res) / parseFloat(tempRes);
+        }
+        break;
+      case "=":
+        if (prevOpe !== "=") {
+          runOpe(curOpe);
+        }
+        break;
+      default:
+        res = tempRes;
+    }
+    res = formatRes(res);
+    prevOpe = curOpe;
+    tempRes = "0";
+    $("#res").html(res);
+    $("#res").removeClass("hidden");
+    $("#tempRes").html(tempRes);
+  }
+
+  $("button").click(function(e) {
+    typed = e.target.value;
+    if (
+      typed === "+" ||
+      typed === "-" ||
+      typed === "/" ||
+      typed === "*" ||
+      typed === "="
+    ) {
+      $("#curOpe").html(typed);
+      decimal = false;
+      curOpe = typed;
+      runOpe(prevOpe);
+
+    } else if (typed === "AC") {
+      clear();
+    } else if (typed === "." && !decimal) {
+      decimal = true;
+      if (tempRes === "0") {
+        tempRes = typed;
+      } else {
+        tempRes += typed;
+      }
+      $("#tempRes").html(tempRes);
+    } else if (/[0-9]/.test(typed)) {
+      console.log("number");
+      if (tempRes === "0") {
+        tempRes = typed;
+      } else {
+        tempRes += typed;
+      }
+      $("#tempRes").html(tempRes);
+    }
+  });
+});
+</script>
+</html>
