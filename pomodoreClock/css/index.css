@@ -1,4 +1,5 @@
 header {
+  font-size: 3em;
   text-align: center;
 }
 body {
@@ -8,7 +9,7 @@ footer {
   text-align: center;
 }
 .wrapper {
-  padding: 150px 200px;
+  padding: 150px 200px 100px 200px;
 }
 .duration {
   text-align: center;
@@ -72,4 +73,10 @@ footer {
   outline: none;
   /* so nobody selects the inside text on button */
   user-select: none;
+}
+.message {
+  padding-top: 50px;
+  text-align: center;
+  font-size: 2em;
+  color: #ff6347;
 }

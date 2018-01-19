@@ -38,6 +38,9 @@
           <button type="button" name="button" id="controls-start">Start</button>
         </div>
       </div>
+      <div class="message">
+        <label id="message"></label>
+      </div>
     </div>
   </body>
   <footer class="footer">
@@ -64,6 +67,9 @@ $(document).ready(function() {
       $("#counter-sec").html(secs);
     }
   }
+  function displayMessage(str){
+    $("#message").html(str);
+  }
   function decreaseMin(){
     if(stopped &&mins>0){
       mins--;
@@ -77,14 +83,17 @@ $(document).ready(function() {
     display();
   }
   function start(){
+    displayMessage('Be Productive! Pomodore Style!');
     timeout = setInterval(decrement, 1000);
     stopped=false;
   }
   function pause(){
+    displayMessage('Wait! What?! A break already?');
     clearInterval(timeout);
     stopped=true;
   }
   function reset(){
+    displayMessage('Restarting...');
     clearInterval(timeout);
     secs=0;
     mins=25;
@@ -101,6 +110,9 @@ $(document).ready(function() {
         secs--;
 
       }
+    }else if(secs===0){
+      displayMessage('Time to have some rest!');
+      reset();
     }
 
     display();
