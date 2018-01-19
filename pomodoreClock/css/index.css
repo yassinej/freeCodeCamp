@@ -1,0 +1,75 @@
+header {
+  text-align: center;
+}
+body {
+  font-family: "Audiowide", cursive;
+}
+footer {
+  text-align: center;
+}
+.wrapper {
+  padding: 150px 200px;
+}
+.duration {
+  text-align: center;
+}
+.duration button {
+  margin: 0px 40px;
+  text-align: center;
+  width: 3em;
+  font-size: 1em;
+  background-color: silver;
+  color: black;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.clock {
+  margin: auto auto;
+  padding: 10px;
+  height: 200px;
+  width: 200px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.clock-timer {
+  font-size: 3em;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column: 30px;
+  grid-row: 120px;
+}
+.controls {
+  padding-top: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 10px;
+}
+.controls button {
+  text-align: center;
+  font-size: 1.5em;
+  color: white;
+  background-color: #ff6347;
+  cursor: pointer;
+  border-radius: 3px;
+  outline: none;
+  /* so nobody selects the inside text on button */
+  user-select: none;
+}
+.start {
+  padding-top: 20px;
+}
+.start button {
+  width: 100%;
+  text-align: center;
+  font-size: 2em;
+  color: white;
+  background-color: #3db83b;
+  cursor: pointer;
+  border-radius: 3px;
+  outline: none;
+  /* so nobody selects the inside text on button */
+  user-select: none;
+}

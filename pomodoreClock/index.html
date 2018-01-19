@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <title>FccCalculator</title>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Audiowide" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="css/index.css" rel="stylesheet"/>
+  <!-- JQuery min -->
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+</head>
+  <body>
+    <header>
+      POMODORE TIMER
+    </header>
+    <div class="wrapper">
+      <div class="duration">
+        <button class="clock-timer-min-plus" id="counter-min-plus">+</button>
+        <button class="clock-timer-min-minus" id="counter-min-minus">-</button>
+      </div>
+      <div class="clock">
+        <div class="clock-timer" id="counter">
+          <div class="clock-timer-min" id="counter-min">25</div>
+          <div>:</div>
+          <div class="clock-timer-sec" id="counter-sec">00</div>
+        </div>
+        <div class="controls">
+          <button type="button" name="button" id="controls-pause">Pause</button>
+          <button type="button" name="button" id="controls-reset">Reset</button>
+        </div>
+        <div class="start">
+          <button type="button" name="button" id="controls-start">Start</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer class="footer">
+      <div class="">
+          Coded with Love by JazyLabs &copy; 2017
+          <br>
+          All Rights Reversed
+      </div>
+  </footer>
+  <script>
+$(document).ready(function() {
+  var timeout;
+  var secs=0, mins=25;
+  var stopped=true;
+  function display(){
+    if(mins<10){
+      $("#counter-min").html('0'+mins);
+    }else{
+      $("#counter-min").html(mins);
+    }
+    if(secs<10){
+      $("#counter-sec").html('0'+secs);
+    }else{
+      $("#counter-sec").html(secs);
+    }
+  }
+  function decreaseMin(){
+    if(stopped &&mins>0){
+      mins--;
+    }
+    display();
+  }
+  function increaseMin(){
+    if(stopped){
+      mins++;
+    }
+    display();
+  }
+  function start(){
+    timeout = setInterval(decrement, 1000);
+    stopped=false;
+  }
+  function pause(){
+    clearInterval(timeout);
+    stopped=true;
+  }
+  function reset(){
+    clearInterval(timeout);
+    secs=0;
+    mins=25;
+    stopped=true;
+    display();
+  }
+  function decrement(){
+    if(mins>0){
+      if(secs===0){
+        secs=59;
+        mins--;
+      }
+      else{
+        secs--;
+
+      }
+    }
+
+    display();
+  }
+  $("#controls-start").click(start);
+  $("#controls-pause").click(pause);
+  $("#controls-reset").click(reset);
+  $("#counter-min-plus").click(increaseMin);
+  $("#counter-min-minus").click(decreaseMin);
+});
+</script>
+</html>
