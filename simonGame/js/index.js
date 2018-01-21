@@ -64,6 +64,10 @@ $(document).ready(function() {
   function clickHandler(id) {
     if (!started) {
       playBtnAudio(id);
+      $("#" + id).toggleClass("active" + id);
+      setTimeout(function() {
+        $("#" + id).toggleClass("active" + id);
+      }, timing / 2);
     } else {
       playBtnAudio(id);
       userSteps.push(id);
