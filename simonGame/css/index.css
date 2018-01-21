@@ -1,0 +1,113 @@
+html {
+  height: 100%;
+}
+header {
+  text-align: center;
+  font-size: 3em;
+}
+.body {
+  font-family: "VT323", monospace;
+  min-height: 100%;
+  background-color: #5e2172;
+  color: white;
+  display: grid;
+  grid-template-rows: 1fr 3fr 1fr auto;
+}
+.game {
+  margin: 0 auto;
+  border: solid white 2px;
+  border-radius: 20%;
+  background-color: #2b2b2b;
+  color: white;
+}
+.game-controls {
+  margin: 0 auto;
+  text-align: center;
+  width: 200px;
+  height: 100px;
+  border-bottom: solid white 2px;
+  border-left: solid white 2px;
+  border-right: solid white 2px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.game-controls button {
+  line-height: 20px;
+  border-radius: 5px;
+  width: 60px;
+  user-select: none;
+  line-height: 20px;
+  border-radius: 5px;
+  width: 60px;
+  user-select: none;
+}
+.game-controls button:focus {
+  outline: none;
+}
+
+.game-controls input {
+  line-height: 20px;
+  user-select: none;
+}
+.score {
+  margin: 0 auto;
+  font-size: 2em;
+  background-color: gray;
+  color: white;
+  max-width: 60px;
+  min-height: 40px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.game-buttons {
+  padding-top: 40px;
+  margin: 0 40px;
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 20px;
+}
+.buttons {
+  height: 10rem;
+  width: 10rem;
+  border-radius: 10px;
+}
+.game-buttons-red {
+  background-color: #ff7a7a;
+}
+.active0 {
+  background-color: #ff0000;
+}
+.game-buttons-blue {
+  background-color: #7a7aff;
+}
+.active1 {
+  background-color: #0000ff;
+}
+.game-buttons-green {
+  background-color: #a7ffa7;
+}
+.active2 {
+  background-color: #00ff00;
+}
+.game-buttons-yellow {
+  background-color: #ffffa7;
+}
+.active3 {
+  background-color: #ffff00;
+}
+.reference {
+  text-align: center;
+  text-decoration: underline;
+}
+.message {
+  padding-top: 20px;
+  text-align: center;
+  font-size: 2em;
+}
+
+.footer {
+  text-align: center;
+  grid-row-start: 4;
+  grid-row-end: 5;
+}

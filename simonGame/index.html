@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simon Game</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/index.css" rel="stylesheet"/>
+    <!-- JQuery min -->
+    <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="js/index.js"></script>
+  </head>
+  <body class='body'>
+    <header class='header'>Simon Game</header>
+    <div class='game'>
+      <div class='game-controls'>
+        <div class='game-controls-score'>
+          <div class='score' id='score'></div>
+        </div>
+        <div class='game-controls-mode'>
+          <input type="radio" id='strict' >Strict</input>
+          <input type="radio" id='expert'>Expert</input>
+        </div>
+        <div class='game-controls-reset'>
+          <button id='start'>Start</button>
+          <audio id="audioStart" src="assets/audioStart.mp3" ></audio>
+          <audio id="audioWin" src="assets/audioWin.mp3" ></audio>
+          <audio id="audioStrictFail" src="assets/audioStrictFail.mp3" ></audio>
+          <audio id="audioFail" src="assets/audioFail.mp3" ></audio>
+          <button id='reset'>Reset</button>
+        </div>
+      </div>
+      <div class='message' id='message'></div>
+      <div class='game-buttons'>
+        <div class="buttons game-buttons-red" id="0"></div>
+        <audio id="audio0" src="assets/audio0.mp3" ></audio>
+        <div class="buttons game-buttons-blue" id="1"></div>
+        <audio id="audio1" src="assets/audio1.mp3" ></audio>
+        <div class="buttons game-buttons-green" id="2"></div>
+        <audio id="audio2" src="assets/audio2.mp3" ></audio>
+        <div class="buttons game-buttons-yellow" id="3"></div>
+        <audio id="audio3" src="assets/audio3.mp3" ></audio>
+      </div>
+    </div>
+
+    <footer class='footer'>
+          Coded with Love by JazyLabs &copy; 2018
+          <br>
+          All Rights Reversed
+          <span class='reference'>Sound effects obtained from https://www.zapsplat.com</span>
+    </footer>
+  </body>
+</html>
