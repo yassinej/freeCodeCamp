@@ -80,6 +80,9 @@ header {
   grid-row-gap: 1rem;
   border-radius: 10%;
 }
+.disabled {
+  pointer-events: none;
+}
 .buttons {
   border-radius: 20%;
   border: solid 2px black;

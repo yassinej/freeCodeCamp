@@ -27,17 +27,23 @@ $(document).ready(function() {
     audio.play();
   }
   function start() {
-    started = true;
-    $(".buttons").prop("disabled", true);
-    displayMessage("Let's start");
-    playAudio("audioStart");
-    playTimeOut = setTimeout(function() {
-      play();
-    }, 3000);
+    if (!started) {
+      started = true;
+      $("#start").prop("disabled", true);
+      $("#strict").prop("disabled", true);
+      $("#expert").prop("disabled", true);
+
+      displayMessage("Let's start");
+      playAudio("audioStart");
+      playTimeOut = setTimeout(function() {
+        play();
+      }, 3000);
+    }
   }
   function play() {
     $("#score").html(steps.length + 1);
     addStep();
+    $(".buttons").addClass("disabled");
     playStep();
     step = 0;
   }
@@ -59,6 +65,9 @@ $(document).ready(function() {
     $("#1").removeClass("active1");
     $("#2").removeClass("active2");
     $("#3").removeClass("active3");
+    $("#start").prop("disabled", false);
+    $("#strict").prop("disabled", false);
+    $("#expert").prop("disabled", false);
     clearTimeout(playTimeOut);
   }
   function clickHandler(id) {
@@ -70,6 +79,10 @@ $(document).ready(function() {
       }, timing / 2);
     } else {
       playBtnAudio(id);
+      $("#" + id).toggleClass("active" + id);
+      setTimeout(function() {
+        $("#" + id).toggleClass("active" + id);
+      }, timing / 2);
       userSteps.push(id);
       if (userSteps.length === steps.length) {
         checkSteps();
@@ -87,7 +100,6 @@ $(document).ready(function() {
   }
   function playStep() {
     if (step < steps.length) {
-      $("#start").prop("disabled", true);
       var id = "#" + steps[step];
       setTimeout(function() {
         $(id).toggleClass("active" + steps[step]);
@@ -99,29 +111,33 @@ $(document).ready(function() {
         playStep();
       }, 2 * timing);
     } else {
+      $(".buttons").removeClass("disabled");
       step = 0;
-      $("#start").prop("disabled", false);
-      $(".buttons").prop("disabled", false);
     }
   }
   function checkSteps() {
+    $(".buttons").addClass("disabled");
     for (var i = 0; i < userSteps.length; i++) {
       if (userSteps[i] !== steps[i]) {
-        displayMessage("Try Again..");
-        // playAudio("audioFail");
-        correct = false;
-        userSteps = [];
         if (strict) {
           displayMessage("You need more practice..");
-          //playAudio("audioStrictFail");
-          reset();
-          playTimeOut = setTimeout(function() {
-            play();
-          }, 3000);
+          playAudio("audioStrictFail");
+          setTimeout(function() {
+            reset();
+            $("#strict").prop("checked", true);
+            strict = true;
+          }, 2000);
+          return;
         } else {
-          playStep();
+          displayMessage("Try Again..");
+          playAudio("audioFail");
+          correct = false;
+          userSteps = [];
+          setTimeout(function() {
+            playStep();
+          }, 2000);
+          return;
         }
-        return;
       }
     }
     if (userSteps.length === 20) {
