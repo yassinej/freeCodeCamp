@@ -16,8 +16,8 @@ header {
   grid-template-rows: 1fr 4fr auto;
 }
 .game {
-  width: 550px;
-  height: 550px;
+  width: 520px;
+  height: 520px;
   margin: auto;
   border: solid black 5px;
   border-radius: 20%;
