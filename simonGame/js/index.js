@@ -42,7 +42,7 @@ $(document).ready(function() {
     step = 0;
   }
   function reset() {
-    displayMessage("Let's start from scratch.");
+    displayMessage("Back to the start");
     steps = [];
     userSteps = [];
     score = 0;
@@ -60,9 +60,6 @@ $(document).ready(function() {
     $("#2").removeClass("active2");
     $("#3").removeClass("active3");
     clearTimeout(playTimeOut);
-    playTimeOut = setTimeout(function() {
-      start();
-    }, 2000);
   }
   function clickHandler(id) {
     if (!started) {
@@ -123,12 +120,37 @@ $(document).ready(function() {
         return;
       }
     }
-    displayMessage("Good! Get Ready for the next step!");
-    userSteps = [];
-    playAudio("audioWin");
-    playTimeOut = setTimeout(function() {
-      play();
-    }, 2000);
+    if (userSteps.length === 20) {
+      if (strict) {
+        if (!expert) {
+          displayMessage(
+            "Woohoo!! You reached the max level, Try the Expert Mode!"
+          );
+        } else {
+          displayMessage("Amazing!! You reached the TOP level!");
+        }
+      } else {
+        if (!expert) {
+          displayMessage(
+            "Woohoo!! You reached the max level, Try the Expert Mode or the Strict Mode"
+          );
+        } else {
+          displayMessage(
+            "Amazing!! You reached the max level in Expert Mode. Try the Strict Mode"
+          );
+        }
+      }
+      setTimeout(function() {
+        reset();
+      }, 3000);
+    } else {
+      displayMessage("Good! Get Ready for the next level!");
+      userSteps = [];
+      playAudio("audioWin");
+      playTimeOut = setTimeout(function() {
+        play();
+      }, 2000);
+    }
   }
   function strictMode() {
     if (!strict) {
